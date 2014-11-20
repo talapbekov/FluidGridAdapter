@@ -193,53 +193,47 @@ public class FluidGridAdapter extends BaseAdapter {
 	/*
 	 * build an array of rows that have images and dimensions of that row
 	 */
-	private ArrayList<FluidPhotoRow> buildFluidPhotoRows(ArrayList<ImageData> imageDatas) {
+private ArrayList<FluidPhotoRow> buildFluidPhotoRows(ArrayList<ImageData> imageDatas) {
 		double photoRowWidth = 0;
 		int i = 0;
-
+        int z=0;
 		ArrayList<FluidPhotoRow> fluidPhotoRows = new ArrayList<FluidPhotoRow>();
 		ArrayList<ImageData> subList = new ArrayList<ImageData>();
 
-		for(ImageData imageData : imageDatas) {
-			i++;
-			int totalPadding = (i - 1) * cellPadding;
-			float aspectRatio = imageData.getAspectRatio();
-			double photoWidth = aspectRatio * desiredRowHeight;
+        for (ImageData imageData: imageDatas){
+            i++;
+            z++;
+            int totalPadding=(z-1)*cellPadding;
+            float aspectRatio=imageData.getAspectRatio();
+            double photoWidth=aspectRatio*desiredRowHeight;
 
-			photoRowWidth = photoRowWidth + photoWidth;
-			if(photoRowWidth < (screenWidth - totalPadding)) {
-				subList.add(imageData);
-				if(i == imageDatas.size()) {
-					double newRowHeight = desiredRowHeight * (screenWidth / photoRowWidth);
-					FluidPhotoRow photoRow = new FluidPhotoRow(subList, (int)Math.floor(newRowHeight));
-					fluidPhotoRows.add(photoRow);
-				}
-			} else if(subList.size() == 0) {
-				double newRowHeight = desiredRowHeight * (screenWidth / photoRowWidth);
-				subList.add(imageData);
-				FluidPhotoRow photoRow = new FluidPhotoRow(subList, (int)Math.floor(newRowHeight));
-				fluidPhotoRows.add(photoRow);
-				subList = new ArrayList<ImageData>();
-			} else {
-				photoRowWidth = photoRowWidth - photoWidth;
-				double newRowHeight = desiredRowHeight * (screenWidth / photoRowWidth);
+            photoRowWidth=photoRowWidth+photoWidth;
+            if(photoRowWidth<(screenWidth-totalPadding)){
+                subList.add(imageData);
+                if(i==imageDatas.size()){
+                    double newRowHeight = desiredRowHeight * ((screenWidth-totalPadding) / photoRowWidth);
+                    FluidPhotoRow photoRow = new FluidPhotoRow(subList, (int)Math.floor(newRowHeight));
+                    fluidPhotoRows.add(photoRow);
 
-				FluidPhotoRow photoRow = new FluidPhotoRow(subList, (int)newRowHeight);
-				fluidPhotoRows.add(photoRow);
-				subList = new ArrayList<ImageData>();
-				subList.add(imageData);
-				photoRowWidth = photoWidth;
+                }
+            }else if(photoRowWidth>screenWidth-totalPadding){
+                photoRowWidth=photoRowWidth-photoWidth;
+                double newRowHeight = desiredRowHeight * ((screenWidth-totalPadding) / photoRowWidth);
+                FluidPhotoRow photoRow = new FluidPhotoRow(subList, (int)Math.floor(newRowHeight));
+                fluidPhotoRows.add(photoRow);
+                subList=new ArrayList<ImageData>();
+                subList.add(imageData);
+                photoRowWidth=photoWidth;
+                if(i == imageDatas.size()) {
+                    double finalRowHeight = desiredRowHeight * ((screenWidth) / photoRowWidth);
+                    FluidPhotoRow newPhotoRow = new FluidPhotoRow(subList, (int)Math.floor(finalRowHeight));
+                    fluidPhotoRows.add(newPhotoRow);
 
-				if(i == imageDatas.size()) {
-					double finalRowHeight = desiredRowHeight * (screenWidth / photoRowWidth);
-					FluidPhotoRow newPhotoRow = new FluidPhotoRow(subList, (int)Math.floor(finalRowHeight));
-					fluidPhotoRows.add(newPhotoRow);
-				} else {
-					i = 0;
-				}
-			}
-		}
-
+                }else {
+                    z=0;
+                }
+            }
+        }
 		return fluidPhotoRows;
 	}
 
