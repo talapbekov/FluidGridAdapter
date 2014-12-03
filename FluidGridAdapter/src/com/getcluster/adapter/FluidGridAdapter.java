@@ -184,7 +184,7 @@ public class FluidGridAdapter extends BaseAdapter {
 	private void calculateScreenDimensions() {
 		Display display = ((Activity)context).getWindowManager().getDefaultDisplay();
 		Point size = new Point();
-        	if (Build.VERSION.SDK_INT >= 11) {
+        	if (Build.VERSION.SDK_INT >= 13) {
             		try {
                 		display.getSize(size);
                 		float one_px = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 1, context.getResources().getDisplayMetrics());
