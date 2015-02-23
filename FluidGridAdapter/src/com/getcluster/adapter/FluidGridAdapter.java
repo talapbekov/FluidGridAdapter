@@ -45,8 +45,8 @@ public class FluidGridAdapter extends BaseAdapter {
 	private int cellPadding;
 	private int screenWidth;
 	private ArrayList<FluidPhotoRow> fluidPhotoRows;
-	private int desiredRowHeight = 200;
-	private int initialCellPadding = 5;
+	private int desiredRowHeight = 130;
+	private int initialCellPadding = 1;
 	private int cellBackgroundColor = 0;
 
 	public FluidGridAdapter(Context context, ArrayList<ImageData> imageDatas) {

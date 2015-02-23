@@ -79,6 +79,7 @@ public class DevicePhotosSampleActivity extends Activity {
 			}
 		}
 		cursor.close();
+		Toast.makeText(this,String.valueOf(imageDatas.size()),Toast.LENGTH_SHORT).show();
 
 		return imageDatas;
 	}
